@@ -2,6 +2,7 @@ package individual.backend;
 
 public class Local {
 
+    private Integer id;
     private String nome;
     private Integer capacidade;
     private Boolean ambienteAberto;
@@ -9,10 +10,19 @@ public class Local {
     public Local() {
     }
 
-    public Local(String nome, Integer capacidade, Boolean ambienteAberto) {
+    public Local(Integer id, String nome, Integer capacidade, Boolean ambienteAberto) {
+        this.id = id;
         this.nome = nome;
         this.capacidade = capacidade;
         this.ambienteAberto = ambienteAberto;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
