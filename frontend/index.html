@@ -4,8 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Individual</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+
+    <div>
+        <div>
+            <h1>Cadastre um novo festival</h1>
+        </div>
+
+        <div>
+            <p>Nome <span class="obrigatorio">*</span></p> 
+            <input type="text" placeholder="Digite o nome do festival" id="ipt_nome">
+        </div>
+
+        <div>
+            <p>Quantidade de atrações <span class="obrigatorio">*</span></p>
+            <input type="number" id="ipt_qtdAtracoes">
+        </div>
+
+        <div>
+            <div>
+                <p>Data de início <span class="obrigatorio">*</span></p>
+                <input type="date" id="ipt_dtInicio">
+            </div>
+            <div>
+                <p>Data de encerramento <span class="obrigatorio">*</span></p>
+                <input type="date" id="ipt_dtFim">
+            </div>
+        </div>
+
+        <div>
+            <p>Evento público <span class="obrigatorio">*</span></p>
+            <input type="radio" id="sim" name="publico" value="1" />
+            <label for="sim">Sim</label>
+            <input type="radio" id="nao" name="publico" value="2" />
+            <label for="nao">Não</label>
+        </div>
+
+        <div>
+            <p>Gênero <span class="obrigatorio">*</span></p>
+            <input type="checkbox" id="" name="genero" value="1">
+            <label for="">genero</label>
+        </div>
+
+        <div>
+            <p>Local <span class="obrigatorio">*</span></p>
+            <select id="select_local">
+                <option value="0" selected disabled>Selecione um local</option>
+            </select>
+        </div>
+    </div>
     
 </body>
 </html>
