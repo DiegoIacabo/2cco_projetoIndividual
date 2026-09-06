@@ -135,6 +135,7 @@
         var dataInicio = ipt_dtInicio.value;
         var dataFim = ipt_dtFim.value;
         var eventoPublico = document.querySelector('input[name="publico"]:checked').value;
+        var local = document.getElementById("select_local").value;
 
         var generosSelecionados = document.querySelectorAll('[name="genero"]:checked');
         var generos = [];
@@ -142,21 +143,41 @@
             generos.push(checkbox.value)
         });
 
-        var local = document.getElementById("select_local").value;
+        jsonCadastro = JSON.stringify({
+            nome: nome,
+            qtdAtracoes: qtdAtracoes,
+            dtInicio: dataInicio,
+            dtFim: dataFim,
+            eventoPublico: eventoPublico,
+            fkLocal: local,
+            idGeneros: generos
+        });
 
-        console.log(nome)
-        console.log(qtdAtracoes)
-        console.log(dataInicio)
-        console.log(dataFim)
-        console.log(eventoPublico)
-        console.log(generos)
-        console.log(local);
+        console.log(jsonCadastro);
 
         fetch("http://localhost:8080/festivais", {
             method: "POST",
-            body: JSON.stringify(generos)
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: jsonCadastro
         })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
 
+                if (resposta.ok) {
+
+                    console.log("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
     }
 
 </script>
