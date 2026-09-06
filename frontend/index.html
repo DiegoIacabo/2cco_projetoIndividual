@@ -10,52 +10,59 @@
 
 <body>
 
-    <div>
-        <div>
+    <div class="cadastro-container">
+        <div class="cadastro-header">
             <h1>Cadastre um novo festival</h1>
+            <div class="codigo-decorativo"></div>
         </div>
 
-        <div>
-            <p>Nome <span class="obrigatorio">*</span></p>
-            <input type="text" placeholder="Digite o nome do festival" id="ipt_nome">
-        </div>
+        <div class="picote"></div>
 
-        <div>
-            <p>Quantidade de atrações <span class="obrigatorio">*</span></p>
-            <input type="number" id="ipt_qtdAtracoes">
-        </div>
+        <div class="corpo">
 
-        <div>
-            <div>
-                <p>Data de início <span class="obrigatorio">*</span></p>
-                <input type="date" id="ipt_dtInicio">
+            <div class="campo">
+                <p>Nome <span class="obrigatorio">*</span></p>
+                <input type="text" placeholder="Digite o nome do festival" id="ipt_nome">
             </div>
-            <div>
-                <p>Data de encerramento <span class="obrigatorio">*</span></p>
-                <input type="date" id="ipt_dtFim">
+
+            <div class="campo">
+                <p>Quantidade de atrações <span class="obrigatorio">*</span></p>
+                <input type="number" placeholder="Ex: 12" id="ipt_qtdAtracoes">
             </div>
-        </div>
 
-        <div>
-            <p>Evento público <span class="obrigatorio">*</span></p>
-            <input type="radio" id="sim" name="publico" value="true" />
-            <label for="sim">Sim</label>
-            <input type="radio" id="nao" name="publico" value="false" />
-            <label for="nao">Não</label>
-        </div>
+            <div class="linha-dupla">
+                <div class="campo">
+                    <p>Data de início <span class="obrigatorio">*</span></p>
+                    <input type="date" id="ipt_dtInicio">
+                </div>
+                <div class="campo">
+                    <p>Data de encerramento <span class="obrigatorio">*</span></p>
+                    <input type="date" id="ipt_dtFim">
+                </div>
+            </div>
 
-        <div id="check_genero">
-            <p>Gênero Musical<span class="obrigatorio">*</span></p>
-        </div>
+            <div class="campo">
+                <p>Evento público <span class="obrigatorio">*</span></p>
+                <input type="radio" id="sim" name="publico" value="true" />
+                <label for="sim">Sim</label>
+                <input type="radio" id="nao" name="publico" value="false" />
+                <label for="nao">Não</label>
+            </div>
 
-        <div>
-            <p>Local <span class="obrigatorio">*</span></p>
-            <select id="select_local">
-                <option value="0" selected disabled>Selecione um local</option>
-            </select>
-        </div>
+            <div id="check_genero">
+                <p>Gênero Musical<span class="obrigatorio">*</span></p>
+            </div>
 
-        <button onclick="cadastrar()">Cadastrar</button>
+            <div class="campo">
+                <p>Local <span class="obrigatorio">*</span></p>
+                <select id="select_local">
+                    <option value="0" selected disabled>Selecione um local</option>
+                </select>
+            </div>
+
+            <button onclick="cadastrar()" class="btn-cadastrar">Cadastrar</button>
+
+        </div>
     </div>
 
 </body>
@@ -92,8 +99,8 @@
             nome = genero.nome;
 
             check_genero.innerHTML += `
-                <input type="checkbox" name="genero" value="${id}">
-                <label>${nome}</label>
+                <input type="checkbox" id="genero_${id}" value="${id}">
+                <label for="genero_${id}">${nome}</label>
             `;
         });
     }
@@ -128,6 +135,7 @@
         })
     }
 
+    // Cadastro
     function cadastrar() {
 
         var nome = ipt_nome.value;
