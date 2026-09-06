@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Individual</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
     <div>
@@ -14,7 +16,7 @@
         </div>
 
         <div>
-            <p>Nome <span class="obrigatorio">*</span></p> 
+            <p>Nome <span class="obrigatorio">*</span></p>
             <input type="text" placeholder="Digite o nome do festival" id="ipt_nome">
         </div>
 
@@ -36,16 +38,14 @@
 
         <div>
             <p>Evento público <span class="obrigatorio">*</span></p>
-            <input type="radio" id="sim" name="publico" value="1" />
+            <input type="radio" id="sim" name="publico" value="true" />
             <label for="sim">Sim</label>
-            <input type="radio" id="nao" name="publico" value="2" />
+            <input type="radio" id="nao" name="publico" value="false" />
             <label for="nao">Não</label>
         </div>
 
-        <div>
-            <p>Gênero <span class="obrigatorio">*</span></p>
-            <input type="checkbox" id="" name="genero" value="1">
-            <label for="">genero</label>
+        <div id="check_genero">
+            <p>Gênero Musical<span class="obrigatorio">*</span></p>
         </div>
 
         <div>
@@ -54,7 +54,109 @@
                 <option value="0" selected disabled>Selecione um local</option>
             </select>
         </div>
+
+        <button onclick="cadastrar()">Cadastrar</button>
     </div>
-    
+
 </body>
+
 </html>
+
+<script>
+
+    window.onload = buscarGeneros();
+    window.onload = buscarLocais();
+
+    // Gêneros Musicais
+    function buscarGeneros() {
+        fetch(`http://localhost:8080/generos`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    criarCamposGeneros(resposta);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ check box: ${error.message}`);
+            });
+    }
+
+    function criarCamposGeneros(resposta) {
+        listaGeneros = Object.values(resposta);
+
+        listaGeneros.forEach(genero => {
+            id = genero.id;
+            nome = genero.nome;
+
+            check_genero.innerHTML += `
+                <input type="checkbox" name="genero" value="${id}">
+                <label>${nome}</label>
+            `;
+        });
+    }
+
+    // Locais dos Eventos
+    function buscarLocais() {
+        fetch(`http://localhost:8080/locais`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    criarCamposLocais(resposta);
+                });
+            } else {
+                console.error("Nenhum dado encontrado ou erro na APi");
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ select: ${error.message}`);
+            });
+    }
+
+    function criarCamposLocais(resposta) {
+        listaLocais = Object.values(resposta);
+
+        listaLocais.forEach(local => {
+            id = local.id;
+            nome = local.nome;
+
+            select_local.innerHTML += `
+                <option value="${id}">${nome}</option>
+            `;
+        })
+    }
+
+    function cadastrar() {
+
+        var nome = ipt_nome.value;
+        var qtdAtracoes = ipt_qtdAtracoes.value;
+        var dataInicio = ipt_dtInicio.value;
+        var dataFim = ipt_dtFim.value;
+        var eventoPublico = document.querySelector('input[name="publico"]:checked').value;
+
+        var generosSelecionados = document.querySelectorAll('[name="genero"]:checked');
+        var generos = [];
+        generosSelecionados.forEach((checkbox) => {
+            generos.push(checkbox.value)
+        });
+
+        var local = document.getElementById("select_local").value;
+
+        console.log(nome)
+        console.log(qtdAtracoes)
+        console.log(dataInicio)
+        console.log(dataFim)
+        console.log(eventoPublico)
+        console.log(generos)
+        console.log(local);
+
+        fetch("http://localhost:8080/festivais", {
+            method: "POST",
+            body: JSON.stringify(generos)
+        })
+
+    }
+
+</script>
