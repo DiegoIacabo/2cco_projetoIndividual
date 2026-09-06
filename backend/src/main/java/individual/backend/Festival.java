@@ -1,6 +1,7 @@
 package individual.backend;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Festival {
 
@@ -11,11 +12,12 @@ public class Festival {
     private LocalDate dtFim;
     private Boolean eventoPublico;
     private Integer fkLocal;
+    private List<Integer> idGeneros;
 
     public Festival() {
     }
 
-    public Festival(Integer id, String nome, Integer qtdAtracoes, LocalDate dtInicio, LocalDate dtFim, Boolean eventoPublico, Integer fkLocal) {
+    public Festival(Integer id, String nome, Integer qtdAtracoes, LocalDate dtInicio, LocalDate dtFim, Boolean eventoPublico, Integer fkLocal, List<Integer> idGeneros) {
         this.id = id;
         this.nome = nome;
         this.qtdAtracoes = qtdAtracoes;
@@ -23,6 +25,7 @@ public class Festival {
         this.dtFim = dtFim;
         this.eventoPublico = eventoPublico;
         this.fkLocal = fkLocal;
+        this.idGeneros = idGeneros;
     }
 
     public Integer getId() {
@@ -80,4 +83,13 @@ public class Festival {
     public void setFkLocal(Integer fkLocal) {
         this.fkLocal = fkLocal;
     }
+
+    public List<Integer> getIdGeneros() {
+        return idGeneros;
+    }
+
+    public void setIdGeneros(List<Integer> idGeneros) {
+        this.idGeneros = idGeneros;
+    }
 }
+

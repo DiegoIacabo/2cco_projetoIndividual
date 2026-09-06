@@ -53,6 +53,15 @@ public class FestivalController {
 
         Integer idGerado = keyHolder.getKeyAs(Integer.class);
         festival.setId(idGerado);
+
+        List<Integer> generos = festival.getIdGeneros();
+
+        for (Integer idGeneroAtual : generos) {
+            String sqlAssociativo = "insert into festival_genero values (?, ?)";
+
+            jdbcTemplate.update(sqlAssociativo, idGerado, idGeneroAtual);
+        }
+
         return ResponseEntity.status(201).body(festival);
     }
 }
