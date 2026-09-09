@@ -35,6 +35,36 @@ public class FestivalController {
     @PostMapping
     public ResponseEntity<Festival> cadastrar(@RequestBody Festival festival){
 
+        if (festival.getNome() == null || festival.getNome().isBlank()) {
+            System.out.println("Nome inválido!");
+            return ResponseEntity.status(400).build();
+        }
+
+        if (festival.getQtdAtracoes() < 2) {
+            System.out.println("Quantidade de atrações inválida!");
+            return ResponseEntity.status(400).build();
+        }
+
+        if (festival.getDtInicio() == null || festival.getDtFim() == null || festival.getDtFim().isBefore(festival.getDtInicio())){
+            System.out.println("Datas inválidas!");
+            return ResponseEntity.status(400).build();
+        }
+
+        if (festival.getEventoPublico() == null) {
+            System.out.println("Não informado se o evento é público!");
+            return ResponseEntity.status(400).build();
+        }
+
+        if (festival.getFkLocal() == null || festival.getFkLocal() == 0) {
+            System.out.println("Local inválido!");
+            return ResponseEntity.status(400).build();
+        }
+
+        if (festival.getIdGeneros() == null || festival.getIdGeneros().isEmpty()) {
+            System.out.println("Gênero musical não escolhido!");
+            return ResponseEntity.status(400).build();
+        }
+
         String sql = "insert into festival values (default, ?, ?, ?, ?, ?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
