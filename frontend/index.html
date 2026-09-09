@@ -99,7 +99,7 @@
             nome = genero.nome;
 
             check_genero.innerHTML += `
-                <input type="checkbox" id="genero_${id}" value="${id}">
+                <input type="checkbox" id="genero_${id}" value="${id}" name="genero">
                 <label for="genero_${id}">${nome}</label>
             `;
         });
@@ -138,6 +138,11 @@
     // Cadastro
     function cadastrar() {
 
+        if (document.querySelector('input[name="publico"]:checked') == null) {
+            alert("Informe se o evento é público ou não!")
+            return;
+        }
+
         var nome = ipt_nome.value;
         var qtdAtracoes = ipt_qtdAtracoes.value;
         var dataInicio = ipt_dtInicio.value;
@@ -146,10 +151,37 @@
         var local = document.getElementById("select_local").value;
 
         var generosSelecionados = document.querySelectorAll('[name="genero"]:checked');
+        console.log("--------------")
+        console.log(generosSelecionados)
+
+        if (generosSelecionados.length == 0) {
+            alert("Selecione pelo menos um gênero musical.");
+            return;
+        }
+
         var generos = [];
         generosSelecionados.forEach((checkbox) => {
             generos.push(checkbox.value)
         });
+
+        console.log("--------------")
+        console.log(generos)
+
+        if (nome == "" || nome.length < 2) {
+            alert("Nome inválido!")
+            ipt_nome.focus();
+            return;
+        } else if (qtdAtracoes == "" || qtdAtracoes < 2 || !Number.isInteger(Number(qtdAtracoes))) {
+            alert("Quantidade de atrações inválida!")
+            ipt_qtdAtracoes.focus();
+            return;
+        } else if (dataInicio == "" || dataFim == "" || dataFim < dataInicio) {
+            alert("Datas inválidas! Precisam estar preenchidas e a Data de Encerramento não pode ser antes da Data de Início!")
+            return;
+        } else if (local === "0" || local === "") { 
+            alert("Selecione um local para o festival."); 
+            return; 
+        }
 
         jsonCadastro = JSON.stringify({
             nome: nome,
