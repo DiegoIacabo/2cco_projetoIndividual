@@ -63,6 +63,14 @@
             <button onclick="cadastrar()" class="btn-cadastrar">Cadastrar</button>
 
         </div>
+
+        <div id="card_resposta" class="card-resposta">
+            <div class="icone-resposta">✓</div>
+            <div class="conteudo-resposta">
+                <p id="titulo_resposta">Festival cadastrado!</p>
+                <span id="mensagem_resposta"> O cadastro foi realizado com sucesso. </span>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -151,8 +159,6 @@
         var local = document.getElementById("select_local").value;
 
         var generosSelecionados = document.querySelectorAll('[name="genero"]:checked');
-        console.log("--------------")
-        console.log(generosSelecionados)
 
         if (generosSelecionados.length == 0) {
             alert("Selecione pelo menos um gênero musical.");
@@ -163,9 +169,6 @@
         generosSelecionados.forEach((checkbox) => {
             generos.push(checkbox.value)
         });
-
-        console.log("--------------")
-        console.log(generos)
 
         if (nome == "" || nome.length < 2) {
             alert("Nome inválido!")
@@ -178,9 +181,9 @@
         } else if (dataInicio == "" || dataFim == "" || dataFim < dataInicio) {
             alert("Datas inválidas! Precisam estar preenchidas e a Data de Encerramento não pode ser antes da Data de Início!")
             return;
-        } else if (local === "0" || local === "") { 
-            alert("Selecione um local para o festival."); 
-            return; 
+        } else if (local === "0" || local === "") {
+            alert("Selecione um local para o festival.");
+            return;
         }
 
         jsonCadastro = JSON.stringify({
@@ -207,7 +210,23 @@
 
                 if (resposta.ok) {
 
-                    console.log("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+                    document.getElementById("card_resposta").style.display = "flex";
+
+                    console.log("Cadastro realizado com sucesso!");
+
+                    setTimeout(() => {
+                        document.getElementById("card_resposta").style.display = "none";
+                        document.getElementById("ipt_nome").value = "";
+                        document.getElementById("ipt_qtdAtracoes").value = "";
+                        document.getElementById("ipt_dtInicio").value = "";
+                        document.getElementById("ipt_dtFim").value = "";
+                        document.getElementById("sim").checked = false;
+                        document.getElementById("nao").checked = false;
+                        generosSelecionados.forEach(generoSelecionado => {
+                            generoSelecionado.checked = false;
+                        });
+                        document.getElementById("select_local").value = "0";
+                    }, "6000");
 
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
